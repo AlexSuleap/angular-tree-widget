@@ -11,14 +11,14 @@
         .directive('tree', function () {
             return {
                 restrict: "E",
-                scope: { nodes: '=', options: '=' },
+                scope: { nodes: '=', options: '=?' },
                 template: "<treenode nodes='nodes' tree='nodelist' options='options'></treenode>",
                 compile: function compile(tElement, tAttrs, transclude) {
                     return {
                         pre: function (scope) {
                             scope.nodelist = [];
                             scope.options = scope.options || (scope.options = { showIcon: true, expandOnClick: false, multipleSelect: false });
-
+                            
                             function generateNodeList(nodes) {
                                 if (nodes != undefined) {
                                     if (nodes.length > 0) {
@@ -53,17 +53,17 @@
         .directive('treenode', ['RecursionHelper', function (RecursionHelper) {
             return {
                 restrict: "E",
-                scope: { nodes: '=', tree: '=', options: '=' },
+                scope: { nodes: '=', tree: '=', options: '=?' },
                 template: '<ul>'
-                            +'<li ng-repeat="node in nodes" class="node">'
-                                +'<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.open,\'tree-node-collapsed\':!node.open && node.children}" ng-click="toogleNode(node)"></i>'
-                                +'<span class="node-title pointer" ng-click="selectNode(node)" ng-class="{\'disabled\':node.disabled, selected: node.selected&& !node.disabled}">'
-                                    +'<i class="tree-node-ico" ng-if="options.showIcon" ng-class="{\'tree-node-image\':node.children, \'tree-node-leaf\':!node.children}" ng-style="node.image && {\'background-image\':\'url({{node.image}})\'}"></i>'
-                                    +'{{node.name}}'
-                                +'</span>'
-                                +'<treenode ng-if="node.children" nodes=\'node.children\' tree="tree" options="options" ng-show="node.open" id="{{node.id}}"></treenode>'
-                            +'</li>'
-                        +'</ul>',
+                            + '<li ng-repeat="node in nodes" class="node">'
+                                + '<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.open,\'tree-node-collapsed\':!node.open && node.children}" ng-click="toggleNode(node)"></i>'
+                                + '<span class="node-title pointer" ng-click="selectNode(node)" ng-class="{\'disabled\':node.disabled}">'
+                                    + '<span><i class="tree-node-ico" ng-if="options.showIcon" ng-class="{\'tree-node-image\':node.children, \'tree-node-leaf\':!node.children}" ng-style="node.image && {\'background-image\':\'url({{node.image}})\'}"></i>'
+                                    + '<span class="node-name" ng-class="{selected: node.selected&& !node.disabled}">{{node.name}}</span></span>'
+                                + '</span>'
+                                + '<treenode ng-if="node.children" nodes=\'node.children\' tree="tree" options="options" ng-show="node.open" id="{{node.id}}"></treenode>'
+                            + '</li>'
+                        + '</ul>',
                 compile: function (element) {
                     return RecursionHelper.compile(element, function (scope, iElement, iAttrs, controller, transcludeFn) {
                         //Select node
@@ -90,7 +90,7 @@
                         }
 
                         //Expand collapse node
-                        scope.toogleNode = function (node) {
+                        scope.toggleNode = function (node) {
                             if (node.children != undefined) {
                                 node.open = !node.open;
                             }

@@ -3,6 +3,7 @@
 */
 
 tree {
+    white-space: nowrap;
 }
 
 treenode {
@@ -14,15 +15,19 @@ treenode {
         padding-left: 16px;
     }
 
+        treenode ul li {
+            margin-right: 5px;
+        }
+
     treenode .node-title {
     }
-
 
     treenode .pointer {
         cursor: pointer;
     }
 
-
+    treenode .node-name {
+    }
 
     treenode .selected {
         background: #BEEBFF none repeat scroll 0% 0%;
@@ -48,20 +53,24 @@ treenode {
 }
 
 .tree-node-ico.tree-node-expanded {
-    background-image: url('img/arrow-right.png');
-}
-
-.tree-node-ico.tree-node-collapsed {
     background-image: url('img/arrow-down.png');
 }
 
-span > .tree-node-ico.tree-node-image {
-    background-image: url('img/folder-open.png');
+.tree-node-ico.tree-node-collapsed {
+    background-image: url('img/arrow-right.png');
 }
 
-span > .tree-node-ico.tree-node-leaf {
-    background-image: url('img/file.png');
+span > .tree-node-ico {
+    margin-right: 5px;
 }
+
+    span > .tree-node-ico.tree-node-image {
+        background-image: url('img/folder-open.png');
+    }
+
+    span > .tree-node-ico.tree-node-leaf {
+        background-image: url('img/file.png');
+    }
 
 
 
