@@ -13,10 +13,11 @@ treenode {
         list-style-type: none;
         -webkit-padding-start: 16px;
         padding-left: 16px;
+        margin-bottom: 0;
     }
 
         treenode ul li {
-            margin-right: 5px;
+            margin-right: 5px;            
         }
 
     treenode .node-title {

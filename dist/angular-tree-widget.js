@@ -18,25 +18,30 @@
                         pre: function (scope) {
                             scope.nodelist = [];
                             scope.options = scope.options || (scope.options = { showIcon: true, expandOnClick: false, multipleSelect: false });
-                            
-                            function generateNodeList(nodes) {
+                            scope.count = 0;
+                            function generateNodeList(nodes, parent) {
                                 if (nodes != undefined) {
                                     if (nodes.length > 0) {
                                         for (var i = 0; i < nodes.length ; i++) {
-
                                             var node = nodes[i];
+
                                             //Generate node ids if no ids are defined
-                                            if (node.id === undefined) {
-                                                node.id = "tree-node-" + i;
+                                            if (node.nodeId === undefined) {
+                                                node.nodeId = "tree-node-" + scope.count;
+                                                scope.count++;
                                             }
 
-                                            //open all the nodes
-                                            if (node.open === undefined && node.children != undefined) {
-                                                node.open = true;
+                                            //expanded all the nodes
+                                            if (node.expanded === undefined && node.children != undefined) {
+                                                node.expanded = true;
                                             }
-
-                                            scope.nodelist.push(node);
-                                            generateNodeList(node.children);
+                                            if (parent != undefined) {
+                                                node.parentId = parent.nodeId;
+                                            }
+                                            if (scope.nodelist.indexOf(node) == -1) {
+                                                scope.nodelist.push(node);
+                                            }
+                                            generateNodeList(node.children, node);
                                         }
                                     }
                                 }
@@ -56,12 +61,12 @@
                 scope: { nodes: '=', tree: '=', options: '=?' },
                 template: '<ul>'
                             + '<li ng-repeat="node in nodes" class="node">'
-                                + '<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.open,\'tree-node-collapsed\':!node.open && node.children}" ng-click="toggleNode(node)"></i>'
+                                + '<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.expanded,\'tree-node-collapsed\':!node.expanded && node.children}" ng-click="toggleNode(node)"></i>'
                                 + '<span class="node-title pointer" ng-click="selectNode(node)" ng-class="{\'disabled\':node.disabled}">'
                                     + '<span><i class="tree-node-ico" ng-if="options.showIcon" ng-class="{\'tree-node-image\':node.children, \'tree-node-leaf\':!node.children}" ng-style="node.image && {\'background-image\':\'url({{node.image}})\'}"></i>'
                                     + '<span class="node-name" ng-class="{selected: node.selected&& !node.disabled}">{{node.name}}</span></span>'
                                 + '</span>'
-                                + '<treenode ng-if="node.children" nodes=\'node.children\' tree="tree" options="options" ng-show="node.open" id="{{node.id}}"></treenode>'
+                                + '<treenode ng-if="node.children" nodes=\'node.children\' tree="tree" options="options" ng-show="node.expanded" id="{{node.nodeId}}"></treenode>'
                             + '</li>'
                         + '</ul>',
                 compile: function (element) {
@@ -71,6 +76,7 @@
                             if (node.disabled) { return; }
                             if (scope.options.multipleSelect) {
                                 node.selected = !node.selected;
+                                scope.$emit('selection-changed', scope.tree.filter(function (item) { return item.selected; }));
                             }
                             else {
                                 node.selected = true;
@@ -78,13 +84,13 @@
                                     if (node != item)
                                         item.selected = false;
                                 });
+                                scope.$emit('selection-changed', node);
                             }
-
-                            scope.$emit('selection-changed', node);
 
                             if (scope.options.expandOnClick) {
                                 if (node.children != undefined) {
-                                    node.open = !node.open;
+                                    node.expanded = !node.expanded;
+                                    scope.$emit('expanded-state-changed', node);
                                 }
                             }
                         }
@@ -92,7 +98,8 @@
                         //Expand collapse node
                         scope.toggleNode = function (node) {
                             if (node.children != undefined) {
-                                node.open = !node.open;
+                                node.expanded = !node.expanded;
+                                scope.$emit('expanded-state-changed', node);
                             }
                         }
                     });
