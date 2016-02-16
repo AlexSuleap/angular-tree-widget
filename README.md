@@ -65,6 +65,7 @@ Do not forget to add [AngularJS](http://www.angularjs.org), [AngularJS.Animate](
 
 - set the `image` property if you want to use a custom image.
 - set the ` disabled` property on `true` if you want to disable the node selection.
+- set the ` expanded` property on `false` if you want the node to be collapsed.
 - updating the tree is done by updating the model.
 - `options` - add the options attribute to the tree tag ```html<tree nodes='treeNodes' options='options'>```:
 	- `multipleSelect` on `true`: allows the user to select multiple nodes; default value `false`.
@@ -73,9 +74,6 @@ Do not forget to add [AngularJS](http://www.angularjs.org), [AngularJS.Animate](
 - events:
 	- 'selection-changed': triggered when a node gets selected;
 	- 'expanded-state-changed':  triggered whenever a node expand state changes.
-
-## Styling
-
 
 ## License
 
