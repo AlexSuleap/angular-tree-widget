@@ -21,17 +21,20 @@ Watch the tree in action on the [demo page](http://alexsuleap.github.io/).
 ## Instalation
 
 [Download](/AlexSuleap/angular-tree-widget/archive/master.zip) the project.
+
 Load the style and the script in your project:
 
 ```html
 <script type="text/javascript" src="/angular-tree-widget.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/angular-tree-widget.min.css">
 ```
+
 Add a dependency to your application module.
 
 ```javascript
 angular.module('myApp', ['TreeWidget']);
 ```
+
 Add data for the tree
 ```javascript	
 $scope.treeNodes =[{
@@ -50,11 +53,29 @@ $scope.treeNodes =[{
 		]
     }];
 ```
+
 Add the tree tag to your application.
 ```html
 <tree nodes='treeNodes'>
 ```
+
 Do not forget to add [AngularJS](http://www.angularjs.org), [AngularJS.Animate](http://www.angularjs.org) and [Angular Recursion](https://github.com/marklagendijk/angular-recursion) references to your project.
+
+## Usage
+
+- set the `image` property if you want to use a custom image.
+- set the ` disabled` property on `true` if you want to disable the node selection.
+- updating the tree is done by updating the model.
+- `options` - add the options attribute to the tree tag ```html<tree nodes='treeNodes' options='options'>```:
+	- `multipleSelect` on `true`: allows the user to select multiple nodes; default value `false`.
+	- `showIcon` on `false`: allows the user to hide the icons; default value `true`; If no images are provided the tree uses the default icons.
+	- `expandOnClick` on `true`: allow the user the expand/collapse a node by clicking on it's label.
+- events:
+	- 'selection-changed': triggered when a node gets selected;
+	- 'expanded-state-changed':  triggered whenever a node expand state changes.
+
+## Styling
+
 
 ## License
 
