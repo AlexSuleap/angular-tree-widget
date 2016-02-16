@@ -18,7 +18,7 @@ Light [AngularJS](http://www.angularjs.org) tree widget control, without jQuery 
 
 Watch the tree in action on the [demo page](http://alexsuleap.github.io/).
 
-## Instalation
+## Installation
 
 [Download](/AlexSuleap/angular-tree-widget/archive/master.zip) the project.
 
