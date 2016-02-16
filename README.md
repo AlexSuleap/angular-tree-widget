@@ -3,7 +3,7 @@
 
 Light AngularJS(http://www.angularjs.org) tree widget, without jQuery dependency.
 
-![ScreenShot](https://github.com/AlexSuleap/angular-tree-widget/demo/img/demo.png?raw=true)
+![ScreenShot](https://github.com/AlexSuleap/angular-tree-widget/blob/master/demo/img/demo.png)
 
 ## Demo
 
