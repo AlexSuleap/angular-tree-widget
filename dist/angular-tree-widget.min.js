@@ -1,5 +1,5 @@
 ﻿/*
-	@license Angular TreeWidget version 0.0.1
+	@license Angular TreeWidget version 1.0.0
 	ⓒ 2016 Alex Suleap https://github.com/AlexSuleap/agular-tree-widget
 	License: MIT
 */
