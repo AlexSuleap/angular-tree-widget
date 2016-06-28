@@ -62,7 +62,7 @@
                 template: '<ul>'
                             + '<li ng-repeat="node in nodes" class="node">'
                                 + '<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.expanded,\'tree-node-collapsed\':!node.expanded && node.children}" ng-click="toggleNode(node)"></i>'
-                                + '<span class="node-title pointer" ng-click="selectNode(node)" ng-class="{\'disabled\':node.disabled}">'
+                                + '<span class="node-title pointer" ng-click="selectNode(node, $event)" ng-class="{\'disabled\':node.disabled}">'
                                     + '<span><i class="tree-node-ico" ng-if="options.showIcon" ng-class="{\'tree-node-image\':node.children, \'tree-node-leaf\':!node.children}" ng-style="node.image && {\'background-image\':\'url(\'+node.image+\')\'}"></i>'
                                     + '<span class="node-name" ng-class="{selected: node.selected&& !node.disabled}">{{node.name}}</span></span>'
                                 + '</span>'
@@ -71,25 +71,41 @@
                         + '</ul>',
                 compile: function (element) {
                     return RecursionHelper.compile(element, function (scope, iElement, iAttrs, controller, transcludeFn) {
+                        function cleanAllSelectedExcept(node) {
+                            angular.forEach(scope.tree, function (item) {
+                                if (node != item)
+                                    item.selected = false;
+                            });
+                        }
+
+                        function getSelectedNodes() {
+                            return scope.tree.filter(function (item) { return item.selected; });
+                        }
+
                         //Select node
-                        scope.selectNode = function (node) {
+                        scope.selectNode = function (node, $event) {
                             if (node.disabled) { return; }
-                            var selectionNode;
-                            if (scope.options.multipleSelect) {
+
+                            var selectedNode;
+                            if (scope.options.multipleSelect === true) {
                                 node.selected = !node.selected;
-                                selectionNode = scope.tree.filter(function (item) { return item.selected; });
-                            }
-                            else {
+                                selectedNode = getSelectedNodes();
+                            } else if (scope.options.multipleSelect === 'ctrlKey' || scope.options.multipleSelect === 'altKey') {
+                                if ($event[scope.options.multipleSelect]) {
+                                    node.selected = !node.selected;
+                                } else {
+                                    node.selected = true;
+                                    cleanAllSelectedExcept(node);
+                                }
+                                selectedNode = getSelectedNodes();
+                            } else {
                                 node.selected = true;
-                                angular.forEach(scope.tree, function (item) {
-                                    if (node != item)
-                                        item.selected = false;
-                                });
-                                selectionNode = node;
+                                cleanAllSelectedExcept(node);
+                                selectedNode = node;
                             }
-                            scope.$emit('selection-changed', selectionNode);
+                            scope.$emit('selection-changed', selectedNode);
                             if (scope.options.onSelectNode) {
-                                scope.options.onSelectNode(selectionNode);
+                                scope.options.onSelectNode(selectedNode);
                             }
 
                             if (scope.options.expandOnClick) {

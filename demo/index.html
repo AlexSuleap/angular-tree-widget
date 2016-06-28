@@ -397,6 +397,43 @@ $scope.basicOptions = {
         </div>
         <hr />
         <div class="row definition">
+            <div ng-controller="OptionsMultiTreeController">
+                <h3>
+                    Advance use - <i>Multiple select with control key</i>
+                </h3>
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:180px;">
+                        <tree nodes='treeNodes' options="options"></tree>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:180px;">
+                        <p class="text-idented">
+                            To enable the advance mode, you have to use the tree option. <code>&lt;tree nodes='treeNodes' options='options'&gt;&lt;/tree&gt;</code>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>To enable multiple selection with a key control set <code>options.multipleSelect='ctrlKey' or 'altKey'</code></li>
+                            </ul>
+                        </p>
+                        <p>
+                            Selected nodes:
+                        </p>
+                        <div ng-if="selectedNodes">
+                            <p ng-repeat="node in selectedNodes" class="text-idented">
+                                <span>{{node.name}}</span>
+                                <i ng-class="{'tree-node-ico': node.image}" ng-style="node.image && {'background-image':'url('+node.image+')'}"></i>
+                            </p>
+                        </div>
+                        <div ng-if="!selectedNodes || selectedNodes.length==0">
+                            <p class="text-idented">N/A</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition">
             <div ng-controller="OptionsTreeController">
                 <div class="col-sm-6">
                     <div class="tree-container" style="min-height:180px;">
