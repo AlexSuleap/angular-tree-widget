@@ -126,9 +126,34 @@ treeApp.controller('InteractiveTree', ['$scope', function ($scope) {
     $scope.$on('expanded-state-changed', function (e, node) {
         // node - the node on which the expanded state changed
         // to see the current state check the expanded property
-        $scope.exapndedNode = node;
+        $scope.expandedNode = node;
         //console.log(node.expanded);
     });
+}]);
+treeApp.controller('InteractiveFunctionsTree', ['$scope', function ($scope) {
+    function init() {
+
+        $scope.basicTree = [
+            {
+                name: "Node 1", children: [
+                  { name: "Node 1.1", children: [{ name: "Node 1.1.1" }, { name: "Node 1.1.2" }] }
+                ]
+            },
+            { name: "Node 2", children: [{ name: "Node 2.1" }, { name: "Node 2.2" }] }
+        ];
+
+        $scope.basicOptions = {
+            showIcon: true,
+            onSelectNode : function (node) {
+                $scope.selectedNode = node;
+            },
+            onExpandNode : function (node) {
+                $scope.expandedNode = node;
+            }
+        }
+    }
+
+    init();
 }]);
 treeApp.controller('CodeController', ['$scope', function ($scope) {
     $scope.codeVisible = false;
@@ -248,7 +273,7 @@ treeApp.controller('OptionsTreeController', ['$scope', function ($scope) {
     $scope.$on('expanded-state-changed', function (e, node) {
         // node - the node on which the expanded state changed
         // to see the current state check the expanded property
-        $scope.exapndedNode = node;
+        $scope.expandedNode = node;
         //console.log(node.expanded);
     });
 }]);

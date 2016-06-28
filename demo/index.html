@@ -268,7 +268,7 @@
                             Events
                         </h3>
                         <p class="text-idented">
-                            The control supports events two events:
+                            The control supports two events:
                             <ul>
                                 <li><code>selection-changed</code> - click on one node</li>
                                 <li><code>expanded-state-changed</code> - click on the expand/collapse arrow</li>
@@ -280,10 +280,10 @@
                         </div>
                         <div>
                             <label>Last expanded node: </label>
-                            <span ng-if="exapndedNode">
-                                <span ng-bind="exapndedNode.name"></span> - <span ng-if="exapndedNode.expanded">expanded</span><span ng-if="!exapndedNode.expanded">collapsed</span>
+                            <span ng-if="expandedNode">
+                                <span ng-bind="expandedNode.name"></span> - <span ng-if="expandedNode.expanded">expanded</span><span ng-if="!expandedNode.expanded">collapsed</span>
                             </span>
-                            <span ng-if="!exapndedNode">N/A</span>
+                            <span ng-if="!expandedNode">N/A</span>
                         </div>
                         <button class="btn btn-info btn-show-left" ng-click="toggleCode()">Show Code</button>
                     </div>
@@ -300,8 +300,60 @@ $scope.$on('expanded-state-changed', function (e, node) {
     // node - the node on which the expanded state changed
     // to see the current state check the expanded property
     //console.log(node.expanded);
-    $scope.exapndedNode = node;    
+    $scope.expandedNode = node;    
 });
+</pre>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition" ng-controller="CodeController">
+            <div ng-controller="InteractiveFunctionsTree">
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:220px;">
+                        <h3>
+                            Events using functions
+                        </h3>
+                        <p class="text-idented">
+                            The control supports two functions defined in options:
+                            <ul>
+                                <li><code>onSelectNode</code> - click on one node</li>
+                                <li><code>onExpandNode</code> - click on the expand/collapse arrow</li>
+                            </ul>
+                        </p>
+                        <div>
+                            <label>Selected node: </label>
+                            <span ng-if="selectedNode" ng-bind="selectedNode.name"></span><span ng-if="!selectedNode">N/A</span>
+                        </div>
+                        <div>
+                            <label>Last expanded node: </label>
+                            <span ng-if="expandedNode">
+                                <span ng-bind="expandedNode.name"></span> - <span ng-if="expandedNode.expanded">expanded</span><span ng-if="!expandedNode.expanded">collapsed</span>
+                            </span>
+                            <span ng-if="!expandedNode">N/A</span>
+                        </div>
+                        <button class="btn btn-info btn-show-left" ng-click="toggleCode()">Show Code</button>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="tree-container" style="min-height:220px;">
+                        <tree nodes='basicTree' options='basicOptions'></tree>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="code-container">
+                    <pre ng-show="codeVisible" class="code-example1">
+$scope.basicOptions = {
+    showIcon: true,
+    onSelectNode : function (node) {
+        $scope.selectedNode = node;
+    },
+    onExpandNode : function (node) {
+        console.log(node);
+        $scope.expandedNode = node;
+    }
+}
 </pre>
                 </div>
             </div>
@@ -365,10 +417,10 @@ $scope.$on('expanded-state-changed', function (e, node) {
                         </div>
                         <div>
                             <label>Last expanded node: </label>
-                            <span ng-if="exapndedNode">
-                                <span ng-bind="exapndedNode.name"></span> - <span ng-if="exapndedNode.expanded">expanded</span><span ng-if="!exapndedNode.expanded">collapsed</span>
+                            <span ng-if="expandedNode">
+                                <span ng-bind="expandedNode.name"></span> - <span ng-if="expandedNode.expanded">expanded</span><span ng-if="!expandedNode.expanded">collapsed</span>
                             </span>
-                            <span ng-if="!exapndedNode">N/A</span>
+                            <span ng-if="!expandedNode">N/A</span>
                         </div>
                     </div>
                 </div>

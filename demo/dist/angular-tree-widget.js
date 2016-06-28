@@ -74,9 +74,10 @@
                         //Select node
                         scope.selectNode = function (node) {
                             if (node.disabled) { return; }
+                            var selectionNode;
                             if (scope.options.multipleSelect) {
                                 node.selected = !node.selected;
-                                scope.$emit('selection-changed', scope.tree.filter(function (item) { return item.selected; }));
+                                selectionNode = scope.tree.filter(function (item) { return item.selected; });
                             }
                             else {
                                 node.selected = true;
@@ -84,13 +85,20 @@
                                     if (node != item)
                                         item.selected = false;
                                 });
-                                scope.$emit('selection-changed', node);
+                                selectionNode = node;
+                            }
+                            scope.$emit('selection-changed', selectionNode);
+                            if (scope.options.onSelectNode) {
+                                scope.options.onSelectNode(selectionNode);
                             }
 
                             if (scope.options.expandOnClick) {
                                 if (node.children != undefined) {
                                     node.expanded = !node.expanded;
                                     scope.$emit('expanded-state-changed', node);
+                                    if (scope.options.onExpandNode) {
+                                        scope.options.onExpandNode(node);
+                                    }
                                 }
                             }
                         }
@@ -100,6 +108,9 @@
                             if (node.children != undefined) {
                                 node.expanded = !node.expanded;
                                 scope.$emit('expanded-state-changed', node);
+                                if (scope.options.onExpandNode) {
+                                    scope.options.onExpandNode(node);
+                                }
                             }
                         }
                     });
