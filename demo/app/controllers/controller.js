@@ -277,4 +277,62 @@ treeApp.controller('OptionsTreeController', ['$scope', function ($scope) {
         //console.log(node.expanded);
     });
 }]);
+treeApp.controller('OptionsMultiTreeController', ['$scope', function ($scope) {
+    function init() {
+        $scope.treeNodes = [{
+            name: "My Files",
+            image: "app/images/disk.png",
+            children: [
+                {
+                    name: "Music",
+                    children: [{
+                        name: "Rock",
+                        image: "app/images/rock.png",
+                        children: [
+                            { name: "The Eagles - Hotel California", image: "app/images/music-20.png" },
+                            { name: "Ozzy Osbourne - Dreamer", image: "app/images/music-20.png" }
+                        ]
+                    },
+                    {
+                        name: "Jazz",
+                        image: "app/images/jazz.png",
+                        children: [
+                            { name: "Ray Charles - Hit the road Jack! ", image: "app/images/music-20.png" },
+                            { name: "Louis Prima - Just A Gigolo", image: "app/images/music-20.png" }
+                        ]
+                    }]
+                },
+                {
+                    name: "Movies",
+                    children: [
+                        { name: "Gladiator", image: "app/images/movie.png" },
+                        { name: "The Shawshank Redemption", image: "app/images/movie.png" },
+                    ]
+                }
+            ]
+        }];
+
+        $scope.options = {
+            multipleSelect: 'ctrlKey',
+            showIcon: true
+        };
+
+    }
+    init();
+
+    $scope.$on('selection-changed', function (e, nodes) {
+        if (nodes.length > 0) {
+            $scope.selectedNodes = nodes;
+        } else {
+            $scope.selectedNodes = [nodes];
+        }
+    });
+
+    $scope.$on('expanded-state-changed', function (e, node) {
+        // node - the node on which the expanded state changed
+        // to see the current state check the expanded property
+        $scope.expandedNode = node;
+        //console.log(node.expanded);
+    });
+}]);
 
