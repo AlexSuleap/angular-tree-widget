@@ -55,13 +55,34 @@
                 }
             }
         })
+        .filter('nodeFilter', ['$filter', function ($filter) {
+
+            return function (nodes, filter) {
+                var recursiveFilter = function (nodes, filter) {
+                    var filtered = [];
+                    angular.forEach(nodes, function (node) {
+                        if ($filter('filter')([node], filter).length > 0) {
+                            filtered.push(node);
+                        } else if (angular.isArray(node.children) && node.children.length > 0) {
+                            var internal = recursiveFilter(node.children, filter);
+                            if (internal.length > 0) {
+                                filtered.push(node);
+                            }
+                        }
+                    });
+                    return filtered;
+                };
+                return recursiveFilter(nodes, filter);
+            }
+
+        }])
         .directive('treenode', ['RecursionHelper', function (RecursionHelper) {
             return {
                 restrict: "E",
                 scope: { nodes: '=', tree: '=', options: '=?' },
                 template: '<ul>'
-                            + '<li ng-repeat="node in nodes" class="node">'
-                                + '<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.expanded,\'tree-node-collapsed\':!node.expanded && node.children}" ng-click="toggleNode(node)"></i>'
+                            + '<li ng-repeat="node in nodes | nodeFilter:options.filter" class="node">'
+                                + '<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.expanded && (node.children | nodeFilter:options.filter).length > 0,\'tree-node-collapsed\':!node.expanded && (node.children | nodeFilter:options.filter).length > 0}" ng-click="toggleNode(node)"></i>'
                                 + '<span class="node-title pointer" ng-click="selectNode(node, $event)" ng-class="{\'disabled\':node.disabled}">'
                                     + '<span><i class="tree-node-ico" ng-if="options.showIcon" ng-class="{\'tree-node-image\':node.children, \'tree-node-leaf\':!node.children}" ng-style="node.image && {\'background-image\':\'url(\'+node.image+\')\'}"></i>'
                                     + '<span class="node-name" ng-class="{selected: node.selected&& !node.disabled}">{{node.name}}</span></span>'

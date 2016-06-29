@@ -335,4 +335,93 @@ treeApp.controller('OptionsMultiTreeController', ['$scope', function ($scope) {
         //console.log(node.expanded);
     });
 }]);
+treeApp.controller('FilterTreeController', ['$scope', function ($scope) {
+    function init() {
+        $scope.treeNodes = [{
+            name: "My Files",
+            image: "app/images/disk.png",
+            children: [
+                {
+                    name: "Music",
+                    children: [{
+                        name: "Rock",
+                        image: "app/images/rock.png",
+                        children: [
+                            { name: "The Eagles - Hotel California", image: "app/images/music-20.png" },
+                            { name: "Ozzy Osbourne - Dreamer", image: "app/images/music-20.png" }
+                        ]
+                    },
+                    {
+                        name: "Jazz",
+                        image: "app/images/jazz.png",
+                        children: [
+                            { name: "Ray Charles - Hit the road Jack! ", image: "app/images/music-20.png" },
+                            { name: "Louis Prima - Just A Gigolo", image: "app/images/music-20.png" }
+                        ]
+                    }]
+                },
+                {
+                    name: "Movies",
+                    children: [
+                        { name: "Gladiator", image: "app/images/movie.png" },
+                        { name: "The Shawshank Redemption", image: "app/images/movie.png" },
+                    ]
+                },
+                {
+                    name: "Photos",
+                    children: [
+                        {
+                            name: "Sea",
+                            image: "app/images/sea.png",
+                            children: [
+                                { name: "image 1.jpg", image: "app/images/sea_img.png" },
+                                { name: "image 4.png", image: "app/images/sea_img.png" }
+                            ]
+                        },
+                        {
+                            name: "Mountains",
+                            image: "app/images/mountain.png",
+                            children: [
+                                { name: "image 1.jpg", image: "app/images/mountain_img.png" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "My Files",
+                    children: [{
+                        name: "Angular books",
+                        children: [
+                            { name: "Pro AngularJS", image: "app/images/pdf.png" },
+                            { name: "AngularJS: Up and Running", image: "app/images/pdf.png" },
+                        ]
+                    }, {
+                        name: "Work",
+                        children: [
+                            { name: "Lost presentation", image: "app/images/ppt.png", disabled: true },
+                            { name: "Requirements", image: "app/images/word.png" },
+                            { name: "TODO list" },
+                            { name: "Finances", image: "app/images/excel.png" },
+                        ]
+                    },
+                    ]
+                }
+            ]
+        }];
+
+        $scope.options = {
+            multipleSelect: 'ctrlKey',
+            showIcon: true,
+            onSelectNode : function (node) {
+                $scope.selectedNodes = node;
+            },
+            onExpandNode : function (node) {
+                $scope.expandedNode = node;
+            },
+            filter : {}
+        };
+
+    }
+    init();
+}]);
 
