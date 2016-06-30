@@ -300,7 +300,7 @@ $scope.$on('expanded-state-changed', function (e, node) {
     // node - the node on which the expanded state changed
     // to see the current state check the expanded property
     //console.log(node.expanded);
-    $scope.expandedNode = node;    
+    $scope.expandedNode = node;
 });
 </pre>
                 </div>
@@ -460,6 +460,63 @@ $scope.basicOptions = {
                             <span ng-if="!expandedNode">N/A</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row definition" ng-controller="CodeController">
+            <div ng-controller="FilterTreeController">
+                <h3>
+                    Advance use - <i>Filter elements</i>
+                </h3>
+                <div class="col-sm-6">
+                    <div class="info-container" style="min-height:180px;">
+                        <p class="text-idented">
+                            To enable the advance mode, you have to use the tree option. <code>&lt;tree nodes='treeNodes' options='options'&gt;&lt;/tree&gt;</code>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>To enable filter feature set <code>options.filter={}</code> and bind any other element to this field</li>
+                            </ul>
+                        </p>
+                        <p>
+                            <ul>
+                                <li>In this example you can filter by <strong>name</strong> or by <strong>image path</strong></li>
+                            </ul>
+                        </p>
+                        <p>
+                            Selected nodes:
+                        </p>
+                        <div ng-if="selectedNodes">
+                            <p ng-repeat="node in selectedNodes" class="text-idented">
+                                <span>{{node.name}}</span>
+                                <i ng-class="{'tree-node-ico': node.image}" ng-style="node.image && {'background-image':'url('+node.image+')'}"></i>
+                            </p>
+                        </div>
+                        <div ng-if="!selectedNodes || selectedNodes.length==0">
+                            <p class="text-idented">N/A</p>
+                        </div>
+                    <button class="btn btn-info" ng-click="toggleCode()">Show Code</button>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        Name: <input type="text" class="form-control" ng-model="options.filter.name">
+                        Image: <input type="text" class="form-control" ng-model="options.filter.image">
+                    </div>
+                    <div class="tree-container" style="min-height:180px;">
+                        <tree nodes="treeNodes" options="options"></tree>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="code-container">
+                    <pre ng-show="codeVisible" class="code-example3">
+$scope.options = {
+    multipleSelect: 'ctrlKey',
+    showIcon: true,
+    filter : {}
+};                        </pre>
                 </div>
             </div>
         </div>
