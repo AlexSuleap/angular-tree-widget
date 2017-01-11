@@ -1,0 +1,23 @@
+{
+  "name": "angular-tree-widget",
+  "version": "1.1.1",
+  "description": "Light AngularJS tree widget control, without jQuery dependency.",
+  "main": "dist/angular-tree-widget.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexSuleap/angular-tree-widget.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexSuleap/angular-tree-widget/issues"
+  },
+  "homepage": "https://github.com/AlexSuleap/angular-tree-widget#readme",
+  "peerDependencies": {
+    "angular-animate": "^1.5.8",
+    "angular-recursion": "^1.0.5"
+  }
+}
