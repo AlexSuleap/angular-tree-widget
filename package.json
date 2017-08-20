@@ -18,6 +18,7 @@
   "homepage": "https://github.com/AlexSuleap/angular-tree-widget#readme",
   "peerDependencies": {
     "angular-animate": "^1.5.8",
-    "angular-recursion": "^1.0.5"
+    "angular-recursion": "^1.0.5",
+    "angular-uuid4": "0.3.1"
   }
 }

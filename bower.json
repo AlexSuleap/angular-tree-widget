@@ -17,8 +17,8 @@
         "demo"
     ],
     "main": [        
-        "dist/angular-tree-widget.min.js",
-        "dist/angular-tree-widget.min.css"
+        "dist/angular-tree-widget.js",
+        "dist/angular-tree-widget.css"
     ],
     "dependencies": {
         "angular": "~1.4.9",
