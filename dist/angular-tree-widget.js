@@ -7,8 +7,8 @@
 (function (angular) {
     'use strict';
 
-    angular.module('TreeWidget', ['ngAnimate', 'RecursionHelper'])
-        .directive('tree', function () {
+    angular.module('TreeWidget', ['ngAnimate', 'RecursionHelper','uuid4'])
+        .directive('tree', ['uuid4', function (uuid4) {
             return {
                 restrict: "E",
                 scope: { nodes: '=', options: '=?' },
@@ -27,7 +27,7 @@
 
                                             //Generate node ids if no ids are defined
                                             if (node.nodeId === undefined) {
-                                                node.nodeId = "tree-node-" + scope.count;
+                                                node.nodeId = uuid4.generate();//"tree-node-" + scope.count;
                                                 scope.count++;
                                             }
 
@@ -54,7 +54,7 @@
                     }
                 }
             }
-        })
+        }])
         .filter('nodeFilter', ['$filter', function ($filter) {
 
             return function (nodes, filter) {
@@ -91,7 +91,7 @@
                                     + '     </span>'
                                     + '</span>'
                                 + '</span>'
-                                + '<treenode ng-if="node.children" nodes=\'node.children\' tree="tree" options="options" ng-show="node.expanded" id="{{node.nodeId}}"></treenode>'
+                                + '<treenode ng-if="node.children && node.expanded" nodes=\'node.children\' tree="tree" options="options" id="{{::node.nodeId}}"></treenode>'
                             + '</li>'
                         + '</ul>',
                 compile: function (element) {
