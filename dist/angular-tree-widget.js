@@ -81,7 +81,7 @@
                 restrict: "E",
                 scope: { nodes: '=', tree: '=', options: '=?' },
                 template: '<ul>'
-                            + '<li ng-repeat="node in nodes | nodeFilter:options.filter" class="node">'
+                            + '<li ng-repeat="node in nodes | nodeFilter:options.filter track by node.nodeId" class="node">'
                                 + '<i class="tree-node-ico pointer" ng-class="{\'tree-node-expanded\': node.expanded && (node.children | nodeFilter:options.filter).length > 0,\'tree-node-collapsed\':!node.expanded && (node.children | nodeFilter:options.filter).length > 0}" ng-click="toggleNode(node)"></i>'
                                 + '<span class="node-title pointer" ng-click="selectNode(node, $event)" ng-class="{\'disabled\':node.disabled}">'
                                     + '<span><i class="tree-node-ico" ng-if="options.showIcon" ng-class="{\'tree-node-image\':node.children, \'tree-node-leaf\':!node.children}" ng-style="node.image && {\'background-image\':\'url(\'+node.image+\')\'}"></i>'
